@@ -56,6 +56,20 @@ services:
         domainname: test
         container_name: dde_mariadb
 
+    postgres:
+        image: postgres:12-alpine
+        restart: unless-stopped
+        ports:
+            - "127.0.0.2:5432:5432"
+        environment:
+            - POSTGRES_PASSWORD=postgres
+        volumes:
+            - ./data/postgres/var/lib/postgresql/data://ar/lib/postgresql/data:delegated
+        hostname: postgres
+        domainname: test
+        container_name: dde_postgres
+        container_name: dde_postgres
+
     mailhog:
         image: mailhog/mailhog
         restart: unless-stopped
@@ -65,6 +79,8 @@ services:
             - VIRTUAL_PORT=8025
         volumes:
             - ./data/mailhog/var/lib/mailhog:/var/lib/mailhog:delegated
+        ports:
+            - "1025:1025"
         hostname: mailhog
         domainname: test
         container_name: dde_mailhog
